@@ -34,28 +34,38 @@ Run with Docker.
 
 ```bash
 docker run -d \
-  -p 6068:6068 \
-  -e TZ="UTC" \
+  --name proxmox2discord \
+  --restart unless-stopped \
+  -e TZ=UTC \
   -e DISCORD_WEBHOOK="https://discord.com/api/webhooks/YOUR_ID/YOUR_TOKEN" \
-  -v "./logs:/var/logs/p2d" \
-  proxmox2discord:latest
+  -p 6068:6068 \
+  -v p2d_logs:/var/logs/p2d \
+  ghcr.io/skulldorom/proxmox2discord:latest
+
 ```
 
 Optionally you can use docker-compose as well.
 
-```yaml
+```
+version: "3.9"
+
 services:
   proxmox2discord:
     container_name: proxmox2discord
-    build: .
+    image: ghcr.io/skulldorom/proxmox2discord:latest
     restart: unless-stopped
     volumes:
-      - ./logs:/var/logs/p2d
+      - p2d_logs:/var/logs/p2d
     environment:
       - TZ=UTC
       - DISCORD_WEBHOOK=https://discord.com/api/webhooks/YOUR_ID/YOUR_TOKEN
     ports:
       - "6068:6068"
+
+volumes:
+  p2d_logs:
+    name: p2d_logs
+
 ```
 
 ```bash
