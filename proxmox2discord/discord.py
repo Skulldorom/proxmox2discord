@@ -33,13 +33,19 @@ def build_discord_payload(payload, log_url: str) -> dict:
     severity = (payload.severity or "unknown").lower()
     cfg = SEVERITY_CONFIG.get(severity, SEVERITY_CONFIG["unknown"])
 
+    # Build description with log link
+    description = payload.discord_description or ''
+    if description:
+        description += f"\n\n[📋 View full logs]({log_url})"
+    else:
+        description = f"[📋 View full logs]({log_url})"
+
     embed = {
         "title":  f"{cfg['emoji']} {payload.title or 'Notification'}",
-        "description": payload.discord_description or '',
+        "description": description,
         "color": cfg["color"],
         "fields": [
             {"name": "Severity", "value": severity.capitalize(), "inline": True},
-            {"name": "Logs", "value": f"[View full logs]({log_url})", "inline": True},
         ],
         "timestamp": datetime.now().isoformat(),
     }
