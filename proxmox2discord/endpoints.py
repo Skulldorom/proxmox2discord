@@ -36,7 +36,15 @@ async def notify(
         )
 
     log_id = uuid.uuid4().hex
-    log_url = str(request.url_for("get_log", log_id=log_id))
+    
+    # Use custom base URL if configured, otherwise use request URL
+    if settings.base_url:
+        # Remove trailing slash from base_url if present
+        base = settings.base_url.rstrip('/')
+        log_url = f"{base}/api/logs/{log_id}"
+    else:
+        log_url = str(request.url_for("get_log", log_id=log_id))
+    
     log_path = settings.log_directory / f"{log_id}.log"
 
     try:

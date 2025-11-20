@@ -8,6 +8,7 @@ from urllib.parse import urlparse
 class Settings(BaseSettings):
     log_directory: Path = Path().cwd() / "logs"
     discord_webhook: AnyUrl | None = None
+    base_url: str | None = None  # Custom base URL for when behind a proxy
     # log_retention_days: int = 7
 
     @field_validator("log_directory", mode='after')

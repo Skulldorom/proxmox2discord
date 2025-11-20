@@ -64,7 +64,6 @@ services:
 volumes:
   p2d_logs:
     name: p2d_logs
-
 ```
 
 ```bash
@@ -93,6 +92,30 @@ The Discord webhook URL can be configured in two ways:
 
 1. **Environment Variable** (Recommended): Set `DISCORD_WEBHOOK` in your Docker/environment
 2. **Request Payload**: Include `discord_webhook` in each request (overrides environment variable)
+
+#### Custom Base URL (Behind Proxy)
+
+If your service is behind a reverse proxy or accessed via a custom domain, set the `BASE_URL` environment variable to ensure log URLs are generated correctly:
+
+```bash
+# Example for Docker
+docker run -d \
+  --name proxmox2discord \
+  -e DISCORD_WEBHOOK="https://discord.com/api/webhooks/YOUR_ID/YOUR_TOKEN" \
+  -e BASE_URL="https://your-domain.com" \
+  -p 6068:6068 \
+  ghcr.io/skulldorom/proxmox2discord:latest
+```
+
+Or in docker-compose:
+
+```yaml
+environment:
+  - DISCORD_WEBHOOK=https://discord.com/api/webhooks/YOUR_ID/YOUR_TOKEN
+  - BASE_URL=https://your-domain.com
+```
+
+Without `BASE_URL`, log URLs are generated from the incoming request, which may not work correctly behind a proxy.
 
 ### Setup with Environment Variable
 
