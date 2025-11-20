@@ -41,7 +41,6 @@ docker run -d \
   -p 6068:6068 \
   -v p2d_logs:/var/logs/p2d \
   ghcr.io/skulldorom/proxmox2discord:latest
-
 ```
 
 Optionally you can use docker-compose as well.
