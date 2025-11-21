@@ -168,6 +168,12 @@ If you prefer to include the webhook in each request or need per-request webhook
 
 > **Note**: If both environment variable and request payload contain a webhook URL, the request payload takes precedence.
 
+## Credits
+
+This project is maintained by [Skulldorom](https://github.com/Skulldorom). While this implementation represents a fresh approach to Proxmox-to-Discord notifications, it may build upon concepts and ideas from earlier community projects in the Proxmox ecosystem.
+
 ## License
 
 Released under the [MIT License](LICENSE).
+
+Copyright (c) 2025 Skulldorom (Jordan Shaw)
