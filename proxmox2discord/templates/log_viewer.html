@@ -92,43 +92,6 @@
             background: #4e4e52;
         }
         
-        .actions {
-            margin-top: 20px;
-            display: flex;
-            gap: 10px;
-            flex-shrink: 0;
-        }
-        
-        .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.2s;
-            text-decoration: none;
-            display: inline-block;
-        }
-        
-        .btn-primary {
-            background: #0e639c;
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            background: #1177bb;
-        }
-        
-        .btn-secondary {
-            background: #3e3e42;
-            color: #d4d4d4;
-        }
-        
-        .btn-secondary:hover {
-            background: #4e4e52;
-        }
-        
         .footer {
             padding: 15px 30px;
             background: #2d2d30;
@@ -143,15 +106,6 @@
             .header, .content {
                 padding: 15px;
             }
-            
-            .actions {
-                flex-direction: column;
-            }
-            
-            .btn {
-                width: 100%;
-                text-align: center;
-            }
         }
     </style>
 </head>
@@ -163,32 +117,10 @@
         </div>
         <div class="content">
             <div class="log-text">{{ log_content }}</div>
-            <div class="actions">
-                <button class="btn btn-primary" onclick="copyToClipboard()">📋 Copy to Clipboard</button>
-                <a href="?download=1" class="btn btn-secondary">💾 Download</a>
-            </div>
         </div>
         <div class="footer">
             Proxmox2Discord Log Viewer
         </div>
     </div>
-    
-    <script>
-        function copyToClipboard() {
-            const logText = document.querySelector('.log-text').textContent;
-            navigator.clipboard.writeText(logText).then(() => {
-                const btn = event.target;
-                const originalText = btn.textContent;
-                btn.textContent = '✓ Copied!';
-                btn.style.background = '#107c10';
-                setTimeout(() => {
-                    btn.textContent = originalText;
-                    btn.style.background = '';
-                }, 2000);
-            }).catch(err => {
-                alert('Failed to copy to clipboard');
-            });
-        }
-    </script>
 </body>
 </html>
