@@ -18,7 +18,7 @@ Whether you run nightly backups or ad‑hoc snapshots, Proxmox2Discord ensures y
 - Raw Log Storage: Saves complete Proxmox logs in a configurable directory.
 - Discord Embeds: Sends rich notifications with title, severity, and log link.
 - Optional User Mentions: Include a Discord user ID to automatically @mention a specific user in the alert.
-- Configurable Retention: Auto-cleanup of old logs after _N_ days. _Coming Soon!_
+- Log Retention: Currently, logs persist indefinitely. Manual cleanup can be performed by removing files from the log directory. Configurable auto-cleanup after _N_ days is planned for a future release.
 - Lightweight: Single Python package; minimal dependencies.
 - Docker‑Ready: Official Dockerfile for fast deployment.
 
@@ -146,6 +146,44 @@ If you prefer to include the webhook in each request or need per-request webhook
 | **Enable**        | ✓                                                                                                                                                                                                                                                                                     |
 
 > **Note**: If both environment variable and request payload contain a webhook URL, the request payload takes precedence.
+
+## Log Management
+
+### Log Persistence
+
+**Current Behavior**: Logs are stored indefinitely in the configured log directory (`/var/logs/p2d` by default in Docker). There is no automatic cleanup mechanism at this time.
+
+### Manual Log Cleanup
+
+If you need to manage disk space, you can manually clean up old logs:
+
+#### Docker Volume
+
+```bash
+# View log files in the Docker volume
+docker exec proxmox2discord ls -lh /var/logs/p2d
+
+# Remove logs older than 30 days
+docker exec proxmox2discord find /var/logs/p2d -name "*.log" -type f -mtime +30 -delete
+```
+
+#### Host System (Manual Installation)
+
+```bash
+# Remove logs older than 30 days from the default location
+find ~/logs -name "*.log" -type f -mtime +30 -delete
+```
+
+You can also set up a cron job to automatically clean up old logs:
+
+```bash
+# Add to crontab (runs daily at 2 AM)
+0 2 * * * find /path/to/logs -name "*.log" -type f -mtime +30 -delete
+```
+
+### Future Plans
+
+Automatic log retention with configurable cleanup after N days is planned for a future release. This will allow you to set a `LOG_RETENTION_DAYS` environment variable to automatically remove logs older than the specified number of days.
 
 ## License
 
