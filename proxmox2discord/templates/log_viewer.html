@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proxmox Log - {{ log_id }}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #252526;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: #2d2d30;
+            padding: 20px 30px;
+            border-bottom: 2px solid #3e3e42;
+        }
+        
+        .header h1 {
+            color: #4ec9b0;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .log-id {
+            color: #9cdcfe;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .log-text {
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 4px;
+            border: 1px solid #3e3e42;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 14px;
+            color: #cccccc;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        
+        .log-text::-webkit-scrollbar {
+            width: 12px;
+        }
+        
+        .log-text::-webkit-scrollbar-track {
+            background: #1e1e1e;
+        }
+        
+        .log-text::-webkit-scrollbar-thumb {
+            background: #3e3e42;
+            border-radius: 6px;
+        }
+        
+        .log-text::-webkit-scrollbar-thumb:hover {
+            background: #4e4e52;
+        }
+        
+        .actions {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: #0e639c;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #1177bb;
+        }
+        
+        .btn-secondary {
+            background: #3e3e42;
+            color: #d4d4d4;
+        }
+        
+        .btn-secondary:hover {
+            background: #4e4e52;
+        }
+        
+        .footer {
+            padding: 15px 30px;
+            background: #2d2d30;
+            border-top: 1px solid #3e3e42;
+            text-align: center;
+            color: #858585;
+            font-size: 12px;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .header, .content {
+                padding: 20px;
+            }
+            
+            .actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📋 Proxmox Log Viewer</h1>
+            <div class="log-id">Log ID: {{ log_id }}</div>
+        </div>
+        <div class="content">
+            <div class="log-text">{{ log_content }}</div>
+            <div class="actions">
+                <button class="btn btn-primary" onclick="copyToClipboard()">📋 Copy to Clipboard</button>
+                <a href="?download=1" class="btn btn-secondary">💾 Download</a>
+            </div>
+        </div>
+        <div class="footer">
+            Proxmox2Discord Log Viewer
+        </div>
+    </div>
+    
+    <script>
+        function copyToClipboard() {
+            const logText = document.querySelector('.log-text').textContent;
+            navigator.clipboard.writeText(logText).then(() => {
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = '✓ Copied!';
+                btn.style.background = '#107c10';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '';
+                }, 2000);
+            }).catch(err => {
+                alert('Failed to copy to clipboard');
+            });
+        }
+    </script>
+</body>
+</html>
