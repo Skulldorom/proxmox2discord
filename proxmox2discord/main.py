@@ -47,9 +47,6 @@ def create_app() -> FastAPI:
         lifespan=lifespan,
         docs_url=None,  # Disable default docs to use custom one
         redoc_url="/redoc",
-        swagger_ui_parameters={
-            "syntaxHighlight.theme": "monokai",
-        },
     )
     
     @app.get("/docs", include_in_schema=False)
