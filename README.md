@@ -18,7 +18,7 @@ Whether you run nightly backups or ad‑hoc snapshots, Proxmox2Discord ensures y
 - Raw Log Storage: Saves complete Proxmox logs in a configurable directory.
 - Discord Embeds: Sends rich notifications with title, severity, and log link.
 - Optional User Mentions: Include a Discord user ID to automatically @mention a specific user in the alert.
-- Log Retention: Currently, logs persist indefinitely. Manual cleanup can be performed by removing files from the log directory. Configurable auto-cleanup after _N_ days is planned for a future release.
+- Log Retention: Manual cleanup available; automatic retention planned. See [Log Management](#log-management) for details.
 - Lightweight: Single Python package; minimal dependencies.
 - Docker‑Ready: Official Dockerfile for fast deployment.
 
@@ -178,7 +178,7 @@ You can also set up a cron job to automatically clean up old logs:
 
 ```bash
 # Add to crontab (runs daily at 2 AM)
-0 2 * * * find /path/to/logs -name "*.log" -type f -mtime +30 -delete
+0 2 * * * find ~/logs -name "*.log" -type f -mtime +30 -delete
 ```
 
 ### Future Plans
