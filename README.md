@@ -2,6 +2,8 @@
 
 Reliable Proxmox Backup and VM Log Notifications in Discord
 
+![alt text](image.png)
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 ## Overview
